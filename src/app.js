@@ -4,6 +4,8 @@ const helmet = require('helmet');
 const morgan = require('morgan');
 const compression = require('compression');
 
+const swaggerUi = require('swagger-ui-express');
+const swaggerFile = require('../swagger/swagger_output.json');
 const index = require("./routes/index")
 const candidatas = require("./routes/candidatasRouter")
 const empresas = require("./routes/empresaRouter")
@@ -22,6 +24,8 @@ app.use(morgan('dev'))
 app.use(helmet())
 app.use(cors())
 app.use(compression())
+app.use('/minha-rota-de-documentacao', swaggerUi.serve, swaggerUi.setup(swaggerFile));
+
 
 app.use(function (request, response, next) {
   response.header("Access-Control-Allow-Origin", "*")
